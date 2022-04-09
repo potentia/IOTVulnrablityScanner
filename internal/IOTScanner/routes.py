@@ -1,5 +1,6 @@
-from IOTScanner import app,external
+from IOTScanner import app
 from flask import render_template
+from time import sleep
 
 
 @app.route("/")
@@ -8,7 +9,7 @@ def home():
 
 @app.route("/scanner", methods=['POST'])
 def scanner():
-    x = external.testing()
+    sleep(10)
     return render_template("scannerresults.html")
 
 
