@@ -19,7 +19,7 @@ for (i = 1; i < 255; i++) {
     console.log("Trying" + " " + "10.10.10."+ i);
     var xData = $.ajaxCall(`http://10.10.10.${i}:8000/xdd566`);
     console.log(xData);
-    if (xData != null){ 
+    if (xData != null){
         return i;
     }
 }
@@ -44,5 +44,5 @@ $(function () {
 
         }
 
-        })  
+        })
 });
