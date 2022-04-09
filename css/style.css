@@ -1,0 +1,8 @@
+.centered {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    font-size: 1.35em;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
