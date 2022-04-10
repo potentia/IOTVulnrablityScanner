@@ -1,5 +1,4 @@
-from time import sleep
 
 def testing():
-    sleep(60)
-    return "test"
+    vulrnableDevices = ["Device1", "Device2"]
+    return vulrnableDevices
