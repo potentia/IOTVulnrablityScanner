@@ -3,16 +3,21 @@
 
 <title>Document</title>
 <link rel="stylesheet" href="static/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="centered">
-        <h1>Results Will Go Here</h1>
+        {% if results|length == 0 %}
+        <h1>No Vulnerable IOT Devices Found</h1>
+        {% elif results|length > 0 %}
+        <h1>Vulnerable Devices Found</h1>
+        {% endif %}
         {% for result in results %}
-        <tr>
         {% for elem in result %}
-            <td>{{elem}}</td>
+            <h3>{{elem}}</h3>
         {% endfor %}
-        </tr>
         {% endfor %}
     </div>
 </body>
