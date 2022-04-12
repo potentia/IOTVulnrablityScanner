@@ -67,7 +67,7 @@ def fingerPrinter(openPorts, hostsOnNetwork):
 
 
 def readFromJson():
-        with open("fingerprints.json", 'r') as fingerpints:
+        with open("/home/scanner/IOTVulnrablityScanner/internal/IOTScanner/fingerprints.json", 'r') as fingerpints:
                 data = json.load(fingerpints)
         return data
 
