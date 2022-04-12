@@ -1,3 +1,9 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    color:rgb(0, 0, 0);
+    font-family: 'Open Sans', sans-serif;
+}
 .centered {
     position: fixed;
     top: 45%;
@@ -6,3 +12,21 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
+
+.button {
+    font-family: 'Open Sans', sans-serif;
+    display: inline-block;
+    padding: 14px 40px;
+    font-size: 30px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: #ffffff;
+    border: 2px solid black;
+    border-radius: 15px;
+  }
+  
+  .button:hover {background-color: #d4caca}
+  

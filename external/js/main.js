@@ -35,7 +35,6 @@ $(function () {
         let data = findHost();
         if (data != null){
             $('#loading').hide();
-            $('#time').hide();
             $('#main').html("IOT Vulnrablity Scanner Address")
             $('#ipattempt').html('<a href="' + "http://"+ "10.10.10." + data + '">' + "10.10.10." + data + '</a>');
             $('#info').html("Note down this address or add it to your bookmarks")
