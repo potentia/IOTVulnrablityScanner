@@ -9,5 +9,5 @@ def home():
 
 @app.route("/scanner", methods=['POST'])
 def scanner():
-    devices = external.testing()
+    devices = external.main()
     return render_template("scannerresults.html", results=devices)
