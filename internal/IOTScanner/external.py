@@ -57,7 +57,6 @@ def fingerPrinter(openPorts, hostsOnNetwork):
                                 sock.close()
                         except:
                                 continue
-                                sock.close()
                         print(data)
         formatFingerPrints = {}
         for hosts in hostsOnNetwork:
