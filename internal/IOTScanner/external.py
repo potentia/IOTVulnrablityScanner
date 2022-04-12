@@ -8,6 +8,11 @@ import socket
 import hashlib
 import json
 
+
+"""
+Takes no aguments and returns the network address and bitmask of that
+network in the format "networkaddress/bimask" eg 192.168.1.0/24
+"""
 def getSubnet():
         ip = netifaces.ifaddresses('eth0')
         ipAddress = ip[netifaces.AF_INET][0].get("addr")
@@ -17,16 +22,30 @@ def getSubnet():
         network = str(x.network)
         return network + "/" + bitmask
 
+"""
+Takes 1 arguemnt that should be network address and bitmask in the following
+format "networkaddress/bimask" eg 192.168.1.0/24. This function creates an
+arp packet that is asking hosts on the network if they have the ip address
+that the "ff:ff:ff:ff:ff:ff" mac address is using. This fucntion returns
+the current hosts on the network.
+"""
 def arpHostDescovery(ipRange):
         x, null = scapy.srp(scapy.Ether(dst="ff:ff:ff:ff:ff:ff")/scapy.ARP(pdst=ipRange),timeout=0.25,verbose=0) #Construcsts and sends an arp packet asking for ff:ff:ff:ff:ff:ff
         hostsOnNetwork = []
         for resNum in range(len(x.res)): #Gets number of hosts found from res
                 hostsOnNetwork.append(x.res[resNum][0][scapy.ARP].pdst) #Adding the pdst(IP) for the hosts found to a list
-        hostsOnNetwork.remove("192.168.1.1")
+        hostsOnNetwork.remove("192.168.1.1") # Removed for testing to speed up scans 
         hostsOnNetwork.remove("192.168.1.108")
         return hostsOnNetwork
 
 
+
+"""
+Takes 1 arguments which should be a list of current hosts ip address on the
+network. I then attemps to connect to all 65535 possible ports and returns
+which ones are open for each host in a dictionary in the following format
+{hostname : [ports]} eg  {'192.168.1.1': [22], '192.168.1.4': [23, 7103]}
+"""
 def portScanner(hostsList):
         openPorts = {}
         for host in hostsList:
@@ -42,6 +61,16 @@ def portScanner(hostsList):
                         sock.close()
         return openPorts
 
+
+"""
+Takes 2 argements a dictionary of open ports as list in the value section and
+the hosts ip adress in the key section. It also takes hosts on a network as 
+a list also. It connects to each open port and collects data it receives
+and combines it with the open ports. This data is then md5 hashed and a 
+diconary in the following format is received {hostname : md5hash}
+
+
+"""
 def fingerPrinter(openPorts, hostsOnNetwork):
         fingerPrints = {}
         iterator = -1
@@ -65,12 +94,21 @@ def fingerPrinter(openPorts, hostsOnNetwork):
                 formatFingerPrints[hosts] = fingerprint.hexdigest()
         return formatFingerPrints
 
-
+"""
+This function takes no agruments and returns json data a python dictionary
+"""
 def readFromJson():
         with open("/home/scanner/IOTVulnrablityScanner/internal/IOTScanner/fingerprints.json", 'r') as fingerpints:
                 data = json.load(fingerpints)
         return data
 
+"""
+This function takes 2 arguemnts that being a python dictionary containg vunralble
+devices md5hashes as keys and a list of information about them as the values. Along 
+with another argument that is fingerprints which is dictionary in the format of 
+{hostname : md5hash}. It returns a list of vulrable devices in the format of 
+[["Device Name","Info "]] 
+"""
 def webInteraction(jsonData, fingerprints):
     print(type(jsonData))
     vulnrableDevices = []
@@ -82,9 +120,13 @@ def webInteraction(jsonData, fingerprints):
             print("Not in json file")
     return vulnrableDevices
 
-
+"""
+This function is the main fucntion of the vulnrabity scanner that takes no arguments
+and returns a list of vulrable devices in the format of [["Device Name","Info "]]
+for the flask server to use a templete.
+"""
 def main():
-    print("Calling getSubnet()")
+    print("Calling getSubnet()") # All print statments here are for debugging 
     subnet = getSubnet()
     print("Given " + str(subnet))
     print("Calling arpHostDescovery(subnet)")
