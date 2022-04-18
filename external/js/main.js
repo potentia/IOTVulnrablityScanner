@@ -16,8 +16,8 @@ $.extend({
 
 function findHost(){
 for (i = 1; i < 255; i++) { // Itterating over the possible 254 hosts that the vulnrablity scanner could be on 
-    console.log("Trying" + " " + "10.10.10."+ i); // for debugging
-    var xData = $.ajaxCall(`http://10.10.10.${i}:5000/64d42a0081addc9bd303ccf4bd598046`);
+    console.log("Trying" + " " + "192.168.1."+ i); // for debugging
+    var xData = $.ajaxCall(`http://192.168.1.${i}:5000/64d42a0081addc9bd303ccf4bd598046`);
     console.log(xData);  // for debugging
     if (xData != null){
         return i;
